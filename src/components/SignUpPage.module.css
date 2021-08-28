@@ -1,0 +1,25 @@
+.page{
+    width: 100%;
+}
+
+.box {
+    text-align: left;
+    margin: 0% 25%;
+    text-align: center;
+    border: black solid 2px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 1.5rem;
+    padding-bottom: 5rem;
+}
+
+.box label{
+    font-weight: bold;
+}
+
+.button{
+    border: orange solid 2px;
+    background-color: orange;
+    color: white;
+    padding: 10px 20px;
+}
