@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SignUpPage from './SignUpPage';
 import Style from './SignInPage.module.css';
 import { Link } from 'react-router-dom';
+import APIService from './APIService';
 
 class SignInPage extends Component {
     constructor(props) {
@@ -9,9 +10,27 @@ class SignInPage extends Component {
         this.state = {
             id: '', username: '', password: '', firstname: '',
             lastname: '', email: '', phone: '', role: '', projectlist: [],
-            isValid: true
+            isValid: true,
+            users:[] //array of users from spring application
         }
         console.log("in signinpage");
+    }
+
+    componentDidMount() {
+        APIService.SignIn().then((data) => {
+            console.log("data from signin: ", data)
+        },
+            (error) => {
+                console.log("Can't get sign in", error)
+            }
+        )
+
+        APIService.getuser().then((data) => {
+            console.log("Data from spring: ", data)
+        })
+            .catch(function (ex) {
+                console.log('Response failed why: ',ex)
+            })
     }
 
     render() {
