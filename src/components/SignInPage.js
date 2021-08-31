@@ -17,7 +17,7 @@ class SignInPage extends Component {
     }
 
     componentDidMount() {
-        APIService.SignIn().then((data) => {
+        APIService.getToken().then((data) => {
             console.log("data from signin: ", data)
         },
             (error) => {
@@ -26,10 +26,17 @@ class SignInPage extends Component {
         )
 
         APIService.getuser().then((data) => {
-            console.log("Data from spring: ", data)
+            console.log("Get User by Id: ", data)
         })
             .catch(function (ex) {
-                console.log('Response failed why: ',ex)
+                if (ex.response) {
+                    console.log('Response failed response: ', ex.response)
+                } else if (ex.request) {
+                    console.log('Response failed request: ', ex.request)
+                } else if (ex.message) {
+                    console.log('Response failed message: ', ex.message)
+                }
+                
             })
     }
 

@@ -1,20 +1,29 @@
 import axios from 'axios';
 
 const USER_API_REST_URL = "http://localhost:8080/KoreraItlize/user/getuserbyid";
-const SIGNIN = "http://localhost:8080/KoreraItlize/user/getalluser";
+const SIGNIN = "http://localhost:8080/KoreraItlize/user/authenticate";
 
-const jwt = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW4iLCJyb2xlIjoiZGFuIiwiZXhwIjoxNjMwNDAwOTA3LCJpYXQiOjE2MzAzNjQ5MDd9.qdlCH7-qY2f4lPMdGL5xUoZPG-t3wsayryhamhhz8As';
+
+const jwt = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW4iLCJyb2xlIjoiZGFuIiwiZXhwIjoxNjMwNDAzNzg3LCJpYXQiOjE2MzAzNjc3ODd9.8T1EvkO5KdzLHdb_1lwjcsrmIbz0CCZb9PtjBtcDzZw';
 const token = {
     headers: {
         Authorization: 'Bearer ' + jwt
     }
 }
+var formdata = new FormData();
+formdata.append("id", 3);
 
-const token1 = {
+axios({
+    method: 'post',
+    url: USER_API_REST_URL,
+    data: formdata,
     headers: {
-        Authorization: 'Bearer ' + jwt
+        Authorization: 'Bearer ' + jwt,
+        'Content-Type': 'multipart/form-data'
     }
-}
+})
+
+const signin = JSON.stringify({ username: 'dan', password: '12344456' });
 
 
 
@@ -24,14 +33,15 @@ class APIService {
         return axios.get(SIGNIN, token)
     }
     getuser() {
-        return axios.get(USER_API_REST_URL, token)
+        return axios.post(USER_API_REST_URL, formdata, token)
     }
-    //get user by username but returns 400 error
-    getToken() {
-        axios.get(USER_API_REST_URL, {
-            params: {
-                username: "dan",
-                password: "12344456"
+    //sign in gives error
+    async getToken() {
+        const test = await axios.post(SIGNIN, signin, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
         }).then((res) => {
             console.log('Data of sign in: ', res);
@@ -40,5 +50,6 @@ class APIService {
             console.log('ERROR HAS OCCURED');
         })
     }
+    
 }
 export default new APIService();

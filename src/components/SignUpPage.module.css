@@ -17,9 +17,11 @@
     font-weight: bold;
 }
 
-.button{
+.button {
     border: orange solid 2px;
     background-color: orange;
     color: white;
     padding: 10px 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
